@@ -66,11 +66,11 @@ def move():
     global snake, food, snake_body, game_end, score
 
     if(game_end):
-            return
+        return
 
     if(snake.x < 0 or snake.x >= window_width or snake.y < 0 or snake.y >= window_height):
-            game_end = True
-            return
+        game_end = True
+        return
 
     for tile in snake_body:
         if(snake.x == tile.x and snake.y == tile.y):
@@ -89,13 +89,13 @@ def move():
     #update the snake body 
     for i in range(len(snake_body) - 1, -1, -1):
         
-        tile = snake_body[i - 1]
+        tile = snake_body[i]
 
         if (i == 0):
             tile.x = snake.x
             tile.y = snake.y
         else: 
-            prev_tile = snake_body[i]
+            prev_tile = snake_body[i - 1]
             tile.x = prev_tile.x
             tile.y = prev_tile.y
 
@@ -103,7 +103,7 @@ def move():
     snake.y += velocity_y * tile_size
 
 def draw():
-    global snake, food, snake, game_end, score
+    global snake, food, snake_body, game_end, score
     move()
 
     canvas.delete("all") #clear the canvas
