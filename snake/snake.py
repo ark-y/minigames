@@ -46,13 +46,13 @@ def change_direction(e):
 
     global velocity_x, velocity_y
 
-    if (e.keysym == "Up"):
+    if (e.keysym == "Up" or e.keysym == "w"):
         velocity_x, velocity_y = 0, -1
-    elif (e.keysym == "Down"):
+    elif (e.keysym == "Down" or e.keysym == "s"):
         velocity_x, velocity_y = 0, 1
-    elif (e.keysym == "Left"):
+    elif (e.keysym == "Left" or e.keysym == "a"):
         velocity_x, velocity_y = -1, 0
-    elif (e.keysym == "Right"):
+    elif (e.keysym == "Right" or e.keysym == "d"):
         velocity_x, velocity_y = 1, 0
 
 def move():
