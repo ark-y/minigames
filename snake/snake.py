@@ -13,4 +13,8 @@ window = tkinter.Tk()
 window.title("Snake")
 window.resizable(False, False)
 
+canvas = tkinter.Canvas(window, bg = "black", width = window_width, height = window_height)
+canvas.pack()
+window.update()
+
 window.mainloop()
