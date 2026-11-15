@@ -42,30 +42,60 @@ snake_body = [] #multiple snake tiles
 
 velocity_x, velocity_y = 0, 0
 
+game_end = False
+
 def change_direction(e):
     #e = event 
     print(e.keysym)
 
     global velocity_x, velocity_y
 
-    if (e.keysym == "Up" or e.keysym == "w" and velocity_y != 1):
+    if(game_end):
+        return
+
+    if (e.keysym == "Up" and velocity_y != 1):
         velocity_x, velocity_y = 0, -1
-    elif (e.keysym == "Down" or e.keysym == "s" and velocity_y != -1):
+    elif (e.keysym == "Down" and velocity_y != -1):
         velocity_x, velocity_y = 0, 1
-    elif (e.keysym == "Left" or e.keysym == "a" and velocity_x != 1):
+    elif (e.keysym == "Left" and velocity_x != 1):
         velocity_x, velocity_y = -1, 0
-    elif (e.keysym == "Right" or e.keysym == "d" and velocity_x != -1):
+    elif (e.keysym == "Right" and velocity_x != -1):
         velocity_x, velocity_y = 1, 0
 
 def move():
-    global snake
+    global snake, food, snake_body, game_end
 
+    if(game_end):
+            return
+
+    if(snake.x < 0 or snake.x >= window_width or snake.y < 0 or snake.y >= window_height):
+            game_end = True
+            return
+
+    for tile in snake_body:
+        if(snake.x == tile.x and snake.y == tile.y):
+            game_end = True
+            return
+    
     #snake eats food 
     if (snake.x == food.x and snake.y == food.y):
         snake_body.append(Tile(food.x, food.y))
 
         food.x = random.randint(0, columns - 1) * tile_size
         food.y = random.randint(0, rows - 1) * tile_size
+
+    #update the snake body 
+    for i in range(len(snake_body) - 1, -1, -1):
+        
+        tile = snake_body[i - 1]
+
+        if (i == 0):
+            tile.x = snake.x
+            tile.y = snake.y
+        else: 
+            prev_tile = snake_body[i]
+            tile.x = prev_tile.x
+            tile.y = prev_tile.y
 
     snake.x += velocity_x * tile_size
     snake.y += velocity_y * tile_size
