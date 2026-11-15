@@ -38,6 +38,8 @@ window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
 snake = Tile(5 * tile_size, 5 * tile_size) #the snake's head
 food = Tile(10 * tile_size, 10 * tile_size)
 
+snake_body = [] #multiple snake tiles
+
 velocity_x, velocity_y = 0, 0
 
 def change_direction(e):
@@ -46,17 +48,24 @@ def change_direction(e):
 
     global velocity_x, velocity_y
 
-    if (e.keysym == "Up" or e.keysym == "w"):
+    if (e.keysym == "Up" or e.keysym == "w" and velocity_y != 1):
         velocity_x, velocity_y = 0, -1
-    elif (e.keysym == "Down" or e.keysym == "s"):
+    elif (e.keysym == "Down" or e.keysym == "s" and velocity_y != -1):
         velocity_x, velocity_y = 0, 1
-    elif (e.keysym == "Left" or e.keysym == "a"):
+    elif (e.keysym == "Left" or e.keysym == "a" and velocity_x != 1):
         velocity_x, velocity_y = -1, 0
-    elif (e.keysym == "Right" or e.keysym == "d"):
+    elif (e.keysym == "Right" or e.keysym == "d" and velocity_x != -1):
         velocity_x, velocity_y = 1, 0
 
 def move():
     global snake
+
+    #snake eats food 
+    if (snake.x == food.x and snake.y == food.y):
+        snake_body.append(Tile(food.x, food.y))
+
+        food.x = random.randint(0, columns - 1) * tile_size
+        food.y = random.randint(0, rows - 1) * tile_size
 
     snake.x += velocity_x * tile_size
     snake.y += velocity_y * tile_size
@@ -65,12 +74,17 @@ def draw():
     global snake
     move()
 
-    #draw the snake 
-    canvas.create_rectangle(snake.x, snake.y, snake.x + tile_size, snake.y + tile_size, fill = "white")
+    canvas.delete("all") #clear the canvas
 
     #draw the food 
     canvas.create_rectangle(food.x, food.y, food.x + tile_size, food.y + tile_size, fill = "blue")
 
+    #draw the snake 
+    canvas.create_rectangle(snake.x, snake.y, snake.x + tile_size, snake.y + tile_size, fill = "white")
+
+    for tile in snake_body:
+        canvas.create_rectangle(tile.x, tile.y, tile.x + tile_size, tile.y + tile_size, fill = "white")
+    
     window.after(100, draw) #100ms (0.1 second, 10 frames per second)
 
 draw()
