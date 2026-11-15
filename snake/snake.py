@@ -40,7 +40,7 @@ food = Tile(10 * tile_size, 10 * tile_size)
 
 snake_body = [] #multiple snake tiles
 
-velocity_x, velocity_y = 0, 0
+velocity_x, velocity_y, score = 0, 0, 0
 
 game_end = False
 
@@ -63,7 +63,7 @@ def change_direction(e):
         velocity_x, velocity_y = 1, 0
 
 def move():
-    global snake, food, snake_body, game_end
+    global snake, food, snake_body, game_end, score
 
     if(game_end):
             return
@@ -84,6 +84,8 @@ def move():
         food.x = random.randint(0, columns - 1) * tile_size
         food.y = random.randint(0, rows - 1) * tile_size
 
+        score += 1
+
     #update the snake body 
     for i in range(len(snake_body) - 1, -1, -1):
         
@@ -101,7 +103,7 @@ def move():
     snake.y += velocity_y * tile_size
 
 def draw():
-    global snake
+    global snake, food, snake, game_end, score
     move()
 
     canvas.delete("all") #clear the canvas
@@ -114,7 +116,11 @@ def draw():
 
     for tile in snake_body:
         canvas.create_rectangle(tile.x, tile.y, tile.x + tile_size, tile.y + tile_size, fill = "white")
-    
+
+    if (game_end):
+        canvas.create_text(window_width/2, window_height/2, font = "Arial 20", text = f"Game Over: {score}", fill = "white")
+    else: 
+        canvas.create_text(30, 20, font = "Arial 10", text = f"Score: {score}", fill = "white")
     window.after(100, draw) #100ms (0.1 second, 10 frames per second)
 
 draw()
