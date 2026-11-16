@@ -1,20 +1,9 @@
 import sys
 
-from PySide6.QtCore import Qt
-from PySide6.QtGui import QPixmap
-from PySide6.QtWidgets import (
-    QApplication,
-    QCheckBox,
-    QComboBox,
-    QDial,
-    QDoubleSpinBox,
-    QLabel,
-    QLineEdit,
-    QListWidget,
-    QMainWindow,
-    QSlider,
-    QSpinBox,
-)
+from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget
+
+from layout_colour import Color
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -22,32 +11,17 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
 
-        slider = QSlider(Qt.Orientation.Horizontal)
+        layout = QVBoxLayout()
 
-        slider.setMinimum(-10)
-        slider.setMaximum(3)
-        # Or: slider.setRange(-10,3)
+        layout.addWidget(Color('red'))
+        layout.addWidget(Color('green'))
+        layout.addWidget(Color('blue'))
 
-        slider.setSingleStep(3)
+        widget = QWidget()
+        widget.setLayout(layout)
+        self.setCentralWidget(widget)
 
-        slider.valueChanged.connect(self.value_changed)
-        slider.sliderMoved.connect(self.slider_position)
-        slider.sliderPressed.connect(self.slider_pressed)
-        slider.sliderReleased.connect(self.slider_released)
 
-        self.setCentralWidget(slider)
-
-    def value_changed(self, value):
-        print(value)
-
-    def slider_position(self, position):
-        print("position", position)
-
-    def slider_pressed(self):
-        print("Pressed!")
-
-    def slider_released(self):
-        print("Released")
 
 
 app = QApplication(sys.argv)
