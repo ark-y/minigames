@@ -10,7 +10,8 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
 
-        self.setFixedSize(300, 400) #setting a fixed size for the widget - doesn't allow resizing
+        self.setMinimumSize(300, 400) 
+        self.setMaximumSize(500, 700)
         
         button = QPushButton("Press!")
         self.setCentralWidget(button) #used to place a widget in the window - by default it takes the whole of the window
