@@ -22,15 +22,32 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
 
-        label = QLabel("Hello")
-        font = label.font()
-        font.setPointSize(30)
-        label.setFont(font)
-        label.setAlignment(
-            Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter
-        )
+        slider = QSlider()
 
-        self.setCentralWidget(label)
+        slider.setMinimum(-10)
+        slider.setMaximum(3)
+        # Or: slider.setRange(-10,3)
+
+        slider.setSingleStep(3)
+
+        slider.valueChanged.connect(self.value_changed)
+        slider.sliderMoved.connect(self.slider_position)
+        slider.sliderPressed.connect(self.slider_pressed)
+        slider.sliderReleased.connect(self.slider_released)
+
+        self.setCentralWidget(slider)
+
+    def value_changed(self, value):
+        print(value)
+
+    def slider_position(self, position):
+        print("position", position)
+
+    def slider_pressed(self):
+        print("Pressed!")
+
+    def slider_released(self):
+        print("Released")
 
 
 app = QApplication(sys.argv)
