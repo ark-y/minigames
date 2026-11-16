@@ -10,16 +10,19 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
 
-        self.setFixedSize(400, 400)
-        
-        button = QPushButton("Press!")
-        button.setCheckable(True)
-        button.clicked.connect(self.button_pressed) #connect the signal to the slot receiver
+        self.button = QPushButton("Press Me!")
+        self.button.clicked.connect(self.the_button_was_clicked)
 
-        self.setCentralWidget(button) #used to place a widget in the window - by default it takes the whole of the window
+        self.setCentralWidget(self.button)
 
-    def button_pressed(self):
-        print("Button was pressed...")
+    def the_button_was_clicked(self):
+        self.button.setText("You already clicked me.")
+        self.button.setEnabled(False)
+
+        # Also change the window title.
+        self.setWindowTitle("My Oneshot App")
+
+
 
 #passing in sys.argv allows command line arguments 
 app = QApplication(sys.argv)
