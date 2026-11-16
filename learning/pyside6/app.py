@@ -22,7 +22,7 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
 
-        slider = QSlider()
+        slider = QSlider(Qt.Orientation.Horizontal)
 
         slider.setMinimum(-10)
         slider.setMaximum(3)
