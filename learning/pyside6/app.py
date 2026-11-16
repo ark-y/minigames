@@ -15,6 +15,9 @@ class MainWindow(QMainWindow):
         layout2 = QVBoxLayout()
         layout3 = QVBoxLayout()
 
+        layout1.setContentsMargins(1,1,1,1)
+        layout1.setSpacing(10)
+
         layout2.addWidget(Color('red'))
         layout2.addWidget(Color('yellow'))
         layout2.addWidget(Color('purple'))
@@ -31,11 +34,6 @@ class MainWindow(QMainWindow):
         widget = QWidget()
         widget.setLayout(layout1)
         self.setCentralWidget(widget)
-
-
-
-
-
 
 app = QApplication(sys.argv)
 window = MainWindow()
