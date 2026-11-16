@@ -10,11 +10,16 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
 
-        self.setMinimumSize(300, 400) 
-        self.setMaximumSize(500, 700)
+        self.setFixedSize(400, 400)
         
         button = QPushButton("Press!")
+        button.setCheckable(True)
+        button.clicked.connect(self.button_pressed) #connect the signal to the slot receiver
+
         self.setCentralWidget(button) #used to place a widget in the window - by default it takes the whole of the window
+
+    def button_pressed(self):
+        print("Button was pressed...")
 
 #passing in sys.argv allows command line arguments 
 app = QApplication(sys.argv)
