@@ -1,33 +1,36 @@
 import sys
+from PySide6.QtWidgets import (
+    QApplication,
+    QLabel,
+    QLineEdit,
+    QMainWindow,
+    QVBoxLayout,
+    QWidget,
+)
 
-from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton
-
-#subclass QMainWindow to customise the application's main window 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
         self.setWindowTitle("My App")
 
-        self.button = QPushButton("Press Me!")
-        self.button.clicked.connect(self.the_button_was_clicked)
+        self.label = QLabel()
 
-        self.setCentralWidget(self.button)
+        self.input = QLineEdit()
+        self.input.textChanged.connect(self.label.setText)
 
-    def the_button_was_clicked(self):
-        self.button.setText("You already clicked me.")
-        self.button.setEnabled(False)
+        layout = QVBoxLayout()
+        layout.addWidget(self.input)
+        layout.addWidget(self.label)
 
-        # Also change the window title.
-        self.setWindowTitle("My Oneshot App")
+        container = QWidget()
+        container.setLayout(layout)
 
+        self.setCentralWidget(container)
 
-
-#passing in sys.argv allows command line arguments 
 app = QApplication(sys.argv)
 
-window = MainWindow() #change from QMainWindow to MainWindow class
+window = MainWindow()
 window.show()
 
 app.exec()
